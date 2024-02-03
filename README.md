@@ -8,11 +8,12 @@ You utilize the Robot Framework for testing your application, and while the test
 
 ## Usage
 ### 1. Prerequisite
-You have python installed on your machine
+You have `python` installed on your machine. See: https://www.python.org/downloads/
+
 ### 2. Clone the repository
 Run `git clone git@github.com:tungbq/robotparser.git`
 
-### 3. Usage:
+### 3. Usage
 #### Run directly on your machine:
 If you want to run the tool directly on your machine
 - Run
@@ -39,15 +40,15 @@ python robotparser.py -i <input-outputxml-file> -o <output-json-file>
 - `python3 robotparser.py -i samples/input/hello-robot.xml -o output/hello-robot.json`
 - `python3 robotparser.py -i samples/input/output-5.0.xml -o output/output-5.0.json`
 
-## Running in docker
+#### Run the script in Docker
 
-- Build the docker image:
+- Build the docker image
 
 ```
 docker build -t robotparser:latest .
 ```
 
-- Run `robotparser` inside container
+- Start `robotparser` inside container
 
 ```
 docker run --rm --name my_robotparser robotparser:latest -i samples/input/hello-robot.xml -o output/hello-robot.json
