@@ -1,10 +1,10 @@
-import json
-import xmltodict
-import time
-import datetime
 import sys
 import getopt
+import json
+import datetime
 import re
+import time
+import xmltodict
 from collections import OrderedDict
 
 TEST_SUITES = []
@@ -13,12 +13,12 @@ def populate_detail(test):
     detail = OrderedDict()
 
     detail['name'] = test['@name']
-
     detail['tag'] = test.get('tags', {}).get('tag', test.get('tag', ''))
-
     detail['status'] = test['status']['@status']
+
     start_time_key = '@starttime' if '@starttime' in test['status'] else '@start'
     detail['start_time'] = test['status'][start_time_key]
+
     if '@starttime' in test['status']:
         detail['end_time'] = test['status']['@endtime']
         detail['elapsed_time'] = get_elapsed_time(
@@ -28,7 +28,6 @@ def populate_detail(test):
         detail['elapsed_time'] = test['status']['@elapsed']
 
     detail['message'] = test['status'].get('#text', '')
-
     return detail
 
 def parse_test(tests):
@@ -61,7 +60,6 @@ def populate_log_path(test):
                         pattern = r"'([^']+)'"
                         file_paths = re.findall(pattern, a['#text'])
                         source_file, destination_directory = file_paths[:2]
-
                         log_path = f'{destination_directory}/{source_file.split("/")[-1]}'
     return log_path
 
@@ -107,6 +105,7 @@ def parse_xml_file(input_xml_file):
 def write_json_to_file(data, output_file):
     with open(output_file, "w") as json_file:
         json.dump(data, json_file, indent=4)
+
 def usage():
     print("""Usage: python parse-robot-output.py -i <input-xml-file> -o <output-json-file>
 Options:
