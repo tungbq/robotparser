@@ -26,3 +26,9 @@ jobs:
           while IFS= read -r input_file; do
             docker run --name ci_for_robotparser --rm -v ${{ github.workspace }}:/app robotparser:latest_ci -i "/app/${input_file}" -o "/app/samples/generated_output/$(basename ${input_file} .xml).json"
           done < input_files.txt
+
+      - name: Archive JSON artifacts
+        uses: actions/upload-artifact@v4.3.0
+        with:
+          name: json-artifacts
+          path: samples/generated_output/*.json
