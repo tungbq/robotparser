@@ -26,3 +26,17 @@ python robotparser.py -i <input-outputxml-file> -o <output-json-file>
 
 - `python3 robotparser.py -i samples/input/hello-robot.xml -o output/hello-robot.json`
 - `python3 robotparser.py -i samples/input/output-4.0.xml -o output/output-4.0.json`
+
+## Running in docker
+
+- Build the docker image:
+
+```
+docker build -t robotparser:latest .
+```
+
+- Run `robotparser` inside container
+
+```
+docker run --rm --name my_robotparser robotparser:latest -i samples/input/hello-robot.xml -o output/hello-robot.json
+```
