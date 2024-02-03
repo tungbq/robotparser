@@ -60,6 +60,17 @@ def collect_all_test_suites(suite):
     else:
         collect_all_test_suites(suite['suite'])
 
+def get_total_stat(total_stats):
+    total_stat = find_total_stat(total_stats)
+    if total_stat:
+        total_pass = int(total_stat.get('@pass', 0))
+        total_fail = int(total_stat.get('@fail', 0))
+        total_skip = int(total_stat.get('@skip', 0))
+    else:
+        total_pass = total_fail = total_skip = 0
+
+    return total_pass, total_fail, total_skip
+
 def read_and_parse_xml(xml_file_path):
     with open(xml_file_path, "r") as xml_file:
         xml_input = xml_file.read().replace('\n', '')
@@ -69,7 +80,7 @@ def read_and_parse_xml(xml_file_path):
         output_data = OrderedDict()
 
         total_stat = find_total_stat(all_data['statistics']['total']['stat'])
-        total_pass, total_fail, total_skip = int(total_stat['@pass']), int(total_stat['@fail']), int(total_stat.get('@skip', 0))
+        total_pass, total_fail, total_skip = get_total_stat(total_stat)
 
         output_data.update(total=total_pass + total_fail + total_skip, pass_=total_pass, fail=total_fail, skip=total_skip)
         output_data['elapsed_time'] = 'N/A' if all_data['suite']['status']['@starttime'] == 'N/A' or all_data['suite']['status']['@endtime'] == 'N/A' else calculate_elapsed_time(
