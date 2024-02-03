@@ -37,32 +37,6 @@ def get_test_cases(suites):
     data = {'details': [detail for suite in suites for detail in parse_test(suite['test'])]}
     return data
 
-def get_log_path(suites):
-    try:
-        return ''.join(parse_teardown(suite['kw']) for suite in suites)
-    except Exception as e:
-        print(f"Could not get log path: {e}")
-        return ""
-
-def parse_teardown(tests):
-    if isinstance(tests, list):
-        return next((populate_log_path(test) for test in tests if (log_path := populate_log_path(test))), '')
-    else:
-        return populate_log_path(tests, '')
-
-def populate_log_path(test):
-    log_path = ""
-    if test['@type'] == "TEARDOWN":
-        for i in test['kw']:
-            if i['@name'] == "Transfer Files To Ftp Server":
-                for a in i['msg']:
-                    if "Transfer file from" in a.get('#text', ''):
-                        pattern = r"'([^']+)'"
-                        file_paths = re.findall(pattern, a['#text'])
-                        source_file, destination_directory = file_paths[:2]
-                        log_path = f'{destination_directory}/{source_file.split("/")[-1]}'
-    return log_path
-
 def get_elapsed_time(start_time, end_time):
     start = time.mktime(datetime.datetime.strptime(start_time, "%Y%m%d %H:%M:%S.%f").timetuple())
     end = time.mktime(datetime.datetime.strptime(end_time, "%Y%m%d %H:%M:%S.%f").timetuple())
