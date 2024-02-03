@@ -54,7 +54,6 @@ def find_total_stat(all_tests_stat):
         return all_tests_stat
 
     total_stat = next((stat for stat in all_tests_stat if isinstance(stat, dict) and stat.get('#text') == 'All Tests'), None)
-    print(f"Total stats: {total_stat}")
     return total_stat
 
 def collect_all_test_suites(suite):
