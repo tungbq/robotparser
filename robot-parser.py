@@ -7,78 +7,79 @@ import time
 import xmltodict
 from collections import OrderedDict
 
-TEST_SUITES = []
+ALL_TEST_SUITES = []
 
-def populate_detail(test):
-    detail = OrderedDict()
+def generate_test_detail(test):
+    test_detail = OrderedDict()
 
-    detail['name'] = test['@name']
-    detail['tag'] = test.get('tags', {}).get('tag', test.get('tag', ''))
-    detail['status'] = test['status']['@status']
+    test_detail['name'] = test['@name']
+    test_detail['tag'] = test.get('tags', {}).get('tag', test.get('tag', ''))
+    test_detail['status'] = test['status']['@status']
 
     start_time_key = '@starttime' if '@starttime' in test['status'] else '@start'
-    detail['start_time'] = test['status'][start_time_key]
+    test_detail['start_time'] = test['status'][start_time_key]
 
     if '@starttime' in test['status']:
-        detail['end_time'] = test['status']['@endtime']
-        detail['elapsed_time'] = get_elapsed_time(
+        test_detail['end_time'] = test['status']['@endtime']
+        test_detail['elapsed_time'] = calculate_elapsed_time(
             test['status']['@starttime'], test['status']['@endtime']
         )
     else:
-        detail['elapsed_time'] = test['status']['@elapsed']
+        test_detail['elapsed_time'] = test['status']['@elapsed']
 
-    detail['message'] = test['status'].get('#text', '')
-    return detail
+    test_detail['message'] = test['status'].get('#text', '')
+    return test_detail
 
-def parse_test(tests):
-    return [populate_detail(test) for test in tests] if isinstance(tests, list) else [populate_detail(tests)]
+def parse_tests(tests):
+    return [generate_test_detail(test) for test in tests] if isinstance(tests, list) else [generate_test_detail(tests)]
 
-def get_test_cases(suites):
-    data = {'details': [detail for suite in suites for detail in parse_test(suite['test'])]}
-    return data
+def collect_test_cases(suites):
+    test_data = {'details': [detail for suite in suites for detail in parse_tests(suite['test'])]}
+    return test_data
 
-def get_elapsed_time(start_time, end_time):
+def calculate_elapsed_time(start_time, end_time):
     start = time.mktime(datetime.datetime.strptime(start_time, "%Y%m%d %H:%M:%S.%f").timetuple())
     end = time.mktime(datetime.datetime.strptime(end_time, "%Y%m%d %H:%M:%S.%f").timetuple())
-    elapsed_time = time.strftime('%H:%M:%S', time.gmtime(end - start))
-    return elapsed_time
+    formatted_elapsed_time = time.strftime('%H:%M:%S', time.gmtime(end - start))
+    return formatted_elapsed_time
 
-def get_total_stat(total_stats):
-    total_stat = next((stat for stat in total_stats if stat['#text'] == 'All Tests'), total_stats)
+def find_total_stat(all_tests_stat):
+    total_stat = next((stat for stat in all_tests_stat if stat['#text'] == 'All Tests'), all_tests_stat)
     return total_stat
 
-def get_test_suites(suite):
+def collect_all_test_suites(suite):
     if 'test' in suite:
-        TEST_SUITES.append(suite)
+        ALL_TEST_SUITES.append(suite)
         return
     elif isinstance(suite, list):
         for sub_suite in suite:
-            get_test_suites(sub_suite)
+            collect_all_test_suites(sub_suite)
     else:
-        get_test_suites(suite['suite'])
+        collect_all_test_suites(suite['suite'])
 
-def parse_xml_file(input_xml_file):
-    with open(input_xml_file, "r") as xml_file:
+def read_and_parse_xml(xml_file_path):
+    with open(xml_file_path, "r") as xml_file:
         xml_input = xml_file.read().replace('\n', '')
         all_data = xmltodict.parse(xml_input)['robot']
-        get_test_suites(all_data['suite'])
-        test_cases = get_test_cases(TEST_SUITES)
-        result = OrderedDict()
+        collect_all_test_suites(all_data['suite'])
+        test_cases = collect_test_cases(ALL_TEST_SUITES)
+        output_data = OrderedDict()
 
-        total_stat = get_total_stat(all_data['statistics']['total']['stat'])
+        total_stat = find_total_stat(all_data['statistics']['total']['stat'])
         total_pass, total_fail, total_skip = int(total_stat['@pass']), int(total_stat['@fail']), int(total_stat.get('@skip', 0))
 
-        result.update(total=total_pass + total_fail + total_skip, pass_=total_pass, fail=total_fail, skip=total_skip)
-        result['elapsed_time'] = 'N/A' if all_data['suite']['status']['@starttime'] == 'N/A' or all_data['suite']['status']['@endtime'] == 'N/A' else get_elapsed_time(
+        output_data.update(total=total_pass + total_fail + total_skip, pass_=total_pass, fail=total_fail, skip=total_skip)
+        output_data['elapsed_time'] = 'N/A' if all_data['suite']['status']['@starttime'] == 'N/A' or all_data['suite']['status']['@endtime'] == 'N/A' else calculate_elapsed_time(
             all_data['suite']['status']['@starttime'], all_data['suite']['status']['@endtime']
         )
-        result['test_case_stats'] = test_cases['details']
+        output_data['test_case_stats'] = test_cases['details']
 
-    return result
+    return output_data
 
-def write_json_to_file(data, output_file):
-    with open(output_file, "w") as json_file:
+def write_json_to_file(data, json_file_path):
+    with open(json_file_path, "w") as json_file:
         json.dump(data, json_file, indent=4)
+
 
 def usage():
     print("""Usage: python parse-robot-output.py -i <input-xml-file> -o <output-json-file>
@@ -131,10 +132,12 @@ def main(argv):
     input_file, output_file = check_input_parameters(argv)
 
     print('Parsing xml file ...')
-    data = parse_xml_file(input_file)
+    data = read_and_parse_xml(input_file)
 
     print(f'Saving json data to output file: {output_file} ...')
     write_json_to_file(data, output_file)
 
+
 if __name__ == "__main__":
     main(sys.argv[1:])
+
