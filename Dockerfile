@@ -13,5 +13,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Define environment variable
 ENV PYTHONUNBUFFERED 1
 
-# Run robotparser.py when the container launches
-CMD ["python", "robotparser.py"]
+# Make the entrypoint script executable
+RUN chmod +x /app/entrypoint.sh
+
+# Run the entrypoint script when the container launches
+ENTRYPOINT ["/app/entrypoint.sh"]
