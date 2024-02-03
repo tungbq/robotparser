@@ -1,0 +1,19 @@
+{
+    "jenkins_job_url": "",
+    "total": 1,
+    "pass_": 1,
+    "fail": 0,
+    "skip": 0,
+    "elapsed_time": "00:00:00",
+    "test_case_stats": [
+        {
+            "name": "My First Robot Test",
+            "tag": "",
+            "status": "PASS",
+            "start_time": "20200206 13:41:35.585",
+            "end_time": "20200206 13:41:35.590",
+            "elapsed_time": "00:00:00",
+            "message": ""
+        }
+    ]
+}
