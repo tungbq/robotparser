@@ -9,6 +9,9 @@ from collections import OrderedDict
 
 ALL_TEST_SUITES = []
 
+def logger(message, level="INFO"):
+    print(f"[{level}] {message}")
+
 def generate_test_detail(test):
     test_detail = OrderedDict()
 
@@ -44,12 +47,14 @@ def calculate_elapsed_time(start_time, end_time):
     return formatted_elapsed_time
 
 def find_total_stat(all_tests_stat):
-    print("Finding total stats")
-    if not isinstance(all_tests_stat, list):
-        return {}
+    logger("Finding total stats...")
+
+    # Return if this is single dict
+    if isinstance(all_tests_stat, dict):
+        return all_tests_stat
 
     total_stat = next((stat for stat in all_tests_stat if isinstance(stat, dict) and stat.get('#text') == 'All Tests'), None)
-    print(f"total_stats: {total_stat}")
+    print(f"Total stats: {total_stat}")
     return total_stat
 
 def collect_all_test_suites(suite):
@@ -62,9 +67,7 @@ def collect_all_test_suites(suite):
     else:
         collect_all_test_suites(suite['suite'])
 
-def get_total_stat(total_stats):
-    total_stat = find_total_stat(total_stats)
-    print(f"total_stat: {total_stat}")
+def get_total_stat(total_stat):
 
     if total_stat:
         total_pass = int(total_stat.get('@pass', 0))
