@@ -7,21 +7,29 @@ Covert Robotframework output.xml result to output.json
 You utilize the Robot Framework for testing your application, and while the test results currently exist in XML format, you require a JSON result file for additional data processing. Look no further – this script is designed to assist you in effortlessly converting an XML test result file into a JSON format.
 
 ## Usage
+
 ### 1. Prerequisite
+
 - `python`: You have `python` installed on your machine. See: https://www.python.org/downloads/
 - `git`: You have `git` installed on your machine to clone the source code. See: https://git-scm.com/downloads
 
 ### 2. Clone the repository
+
 Run `git clone git@github.com:tungbq/robotparser.git`
 
 ### 3. Usage
-#### Run directly on your machine:
-If you want to run the tool directly on your machine, follow below steps:
-- Run
-```
-# Navigate to your cloned code
-cd robotparser
 
+#### Run directly on your machine:
+
+If you want to run the tool directly on your machine, follow below steps:
+
+- Navigate to your cloned code
+
+`cd robotparser`
+
+- Run
+
+```
 # Install dependencies
 pip install -r requirements.txt
 
@@ -41,8 +49,14 @@ python robotparser.py -i <input-outputxml-file> -o <output-json-file>
 - `python3 robotparser.py -i samples/input/hello-robot.xml -o output/hello-robot.json`
 - `python3 robotparser.py -i samples/input/output-5.0.xml -o output/output-5.0.json`
 
-#### Run the script in Docker
-IF you want to run the script inside a Docker container, follow below steps
+#### Run the script in Docker (Optional)
+
+If you want to run the script inside a Docker container, follow below steps:
+
+- Navigate to your cloned code
+
+`cd robotparser`
+
 - Build the docker image
 
 ```
@@ -52,5 +66,6 @@ docker build -t robotparser:latest .
 - Start `robotparser` inside container
 
 ```
-docker run --rm --name my_robotparser robotparser:latest -i samples/input/hello-robot.xml -o output/hello-robot.json
+YOUR_ROBOT_SCRIPT_PATH="/home/user/testing/robot_result/"
+docker run --rm --name my_robotparser -v ${YOUR_ROBOT_SCRIPT}:/app robotparser:latest -i /app/your_robot_filename_in.xml -o /app/your_robot_filename_out.json
 ```
