@@ -1,0 +1,31 @@
+name: Python Run
+
+on:
+  pull_request:
+    branches: ['main']
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.9
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: List input files
+        run: ls -1 samples/input/*.xml > input_files.txt
+
+      - name: Run script for each input file
+        run: |
+          mkdir ci_output
+          while IFS= read -r input_file; do
+            python robotparser.py -i "${input_file}" -o "ci_output/$(basename ${input_file} .xml).json"
+          done < input_files.txt
