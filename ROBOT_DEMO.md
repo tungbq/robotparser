@@ -2,18 +2,17 @@
 
 Run sample robot suites to generate output.xml files
 
-- Build the docker image
+- Install robot
 
 ```
-cd robotparser
-docker build -t robotdemo:latest robotdemo.dockerfile
+pip install robotframework
+``
+
+- Run test script
 ```
 
-- Run the demo
+python3 -m robot robot_demo/keyword_driven.robot
 
 ```
-  docker run --rm --name my_robotdemo \
-   -v $(pwd):/app \
-   robotdemo:latest ls -la /app
 
 ```
