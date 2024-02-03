@@ -42,10 +42,12 @@ python robotparser.py -i <input-outputxml-file> -o <output-json-file>
 ```
 
 - Example
+
 ```
 python3 robotparser.py -i samples/input/hello_robot.xml -o output/hello_robot.json
 python3 robotparser.py -i samples/input/output_5_0.xml -o output/output_5_0.json
-python3 robotparser.py -i samples/input/random_sample_01.xml -o output/random_sample_01.json
+python3 robotparser.py -i samples/input/output_5_0.xml -o output/output_5_0.json
+python3 robotparser.py -i samples/input/robot_demo_keyword_driven.xml -o output/robot_demo_keyword_driven.json
 ```
 
 ### 4. Run the script in Docker (Optional)
@@ -53,6 +55,7 @@ python3 robotparser.py -i samples/input/random_sample_01.xml -o output/random_sa
 If you want to run the script inside a Docker container, follow below steps:
 
 - Build the docker image
+
 ```
 cd robotparser
 docker build -t robotparser:latest .
@@ -66,9 +69,14 @@ cd robotparser
 YOUR_ROBOT_SCRIPT_PATH="/home/user/testing/robot_result/"
 # Mount your robot sccipt path to docker container. Note that `/app` is the workspace of docker container
 docker run --rm --name my_robotparser \
-                    -v ${YOUR_ROBOT_SCRIPT_PATH}:/app \
-                    robotparser:latest \
-                    -i /app/your_robot_filename_in.xml \
-                    -o /app/your_robot_filename_out.json
+ -v ${YOUR_ROBOT_SCRIPT_PATH}:/app \
+ robotparser:latest \
+ -i /app/your_robot_filename_in.xml \
+ -o /app/your_robot_filename_out.json
 ```
+
 One completed, we can find the JSON result under `YOUR_ROBOT_SCRIPT_PATH`
+
+### 5. Run robot demo to generate sample output.xml files
+
+See [ROBOT_DEMO](./ROBOT_DEMO.md)

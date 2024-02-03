@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0 (Python 3.10.12 on linux)" generated="2024-02-03T16:26:09.990271" rpa="false" schemaversion="5">
+<suite id="s1" name="Keyword Driven" source="/mnt/d/CODING/GITHUB/OPEN-SOURCE/robotparser/robot_demo/keyword_driven.robot">
+<test id="s1-t1" name="Push button" line="16">
+<kw name="Push button">
+<msg time="2024-02-03T16:26:10.017097" level="FAIL">No keyword with name 'Push button' found.</msg>
+<arg>1</arg>
+<status status="FAIL" start="2024-02-03T16:26:10.017051" elapsed="0.000105">No keyword with name 'Push button' found.</status>
+</kw>
+<kw name="Result should be">
+<arg>1</arg>
+<status status="NOT RUN" start="2024-02-03T16:26:10.017965" elapsed="0.000022"/>
+</kw>
+<status status="FAIL" start="2024-02-03T16:26:10.015695" elapsed="0.002497">No keyword with name 'Push button' found.</status>
+</test>
+<test id="s1-t2" name="Push multiple buttons" line="20">
+<kw name="Push button">
+<msg time="2024-02-03T16:26:10.019355" level="FAIL">No keyword with name 'Push button' found.</msg>
+<arg>1</arg>
+<status status="FAIL" start="2024-02-03T16:26:10.019327" elapsed="0.000062">No keyword with name 'Push button' found.</status>
+</kw>
+<kw name="Push button">
+<arg>2</arg>
+<status status="NOT RUN" start="2024-02-03T16:26:10.020149" elapsed="0.000027"/>
+</kw>
+<kw name="Result should be">
+<arg>12</arg>
+<status status="NOT RUN" start="2024-02-03T16:26:10.020933" elapsed="0.000022"/>
+</kw>
+<status status="FAIL" start="2024-02-03T16:26:10.018518" elapsed="0.002624">No keyword with name 'Push button' found.</status>
+</test>
+<test id="s1-t3" name="Simple calculation" line="25">
+<kw name="Push button">
+<msg time="2024-02-03T16:26:10.022438" level="FAIL">No keyword with name 'Push button' found.</msg>
+<arg>1</arg>
+<status status="FAIL" start="2024-02-03T16:26:10.022389" elapsed="0.000099">No keyword with name 'Push button' found.</status>
+</kw>
+<kw name="Push button">
+<arg>+</arg>
+<status status="NOT RUN" start="2024-02-03T16:26:10.024560" elapsed="0.000047"/>
+</kw>
+<kw name="Push button">
+<arg>2</arg>
+<status status="NOT RUN" start="2024-02-03T16:26:10.025608" elapsed="0.000037"/>
+</kw>
+<kw name="Push button">
+<arg>=</arg>
+<status status="NOT RUN" start="2024-02-03T16:26:10.027353" elapsed="0.000056"/>
+</kw>
+<kw name="Result should be">
+<arg>3</arg>
+<status status="NOT RUN" start="2024-02-03T16:26:10.028294" elapsed="0.000030"/>
+</kw>
+<status status="FAIL" start="2024-02-03T16:26:10.021454" elapsed="0.007179">No keyword with name 'Push button' found.</status>
+</test>
+<test id="s1-t4" name="Longer calculation" line="32">
+<kw name="Push buttons">
+<msg time="2024-02-03T16:26:10.029988" level="FAIL">No keyword with name 'Push buttons' found.</msg>
+<arg>5 + 4 - 3 * 2 / 1 =</arg>
+<status status="FAIL" start="2024-02-03T16:26:10.029936" elapsed="0.000172">No keyword with name 'Push buttons' found.</status>
+</kw>
+<kw name="Result should be">
+<arg>3</arg>
+<status status="NOT RUN" start="2024-02-03T16:26:10.030992" elapsed="0.000029"/>
+</kw>
+<status status="FAIL" start="2024-02-03T16:26:10.028988" elapsed="0.002282">No keyword with name 'Push buttons' found.</status>
+</test>
+<test id="s1-t5" name="Clear" line="36">
+<kw name="Push button">
+<msg time="2024-02-03T16:26:10.032713" level="FAIL">No keyword with name 'Push button' found.</msg>
+<arg>1</arg>
+<status status="FAIL" start="2024-02-03T16:26:10.032649" elapsed="0.000135">No keyword with name 'Push button' found.</status>
+</kw>
+<kw name="Push button">
+<arg>C</arg>
+<status status="NOT RUN" start="2024-02-03T16:26:10.033655" elapsed="0.000041"/>
+</kw>
+<kw name="Result should be">
+<arg>${EMPTY}</arg>
+<status status="NOT RUN" start="2024-02-03T16:26:10.034637" elapsed="0.000047"/>
+</kw>
+<status status="FAIL" start="2024-02-03T16:26:10.031629" elapsed="0.003327">No keyword with name 'Push button' found.</status>
+</test>
+<doc>Example test cases using the keyword-driven testing approach.
+
+All tests contain a workflow constructed from keywords in
+``CalculatorLibrary.py``. Creating new tests or editing
+existing is easy even for people without programming skills.
+
+The _keyword-driven_ appoach works well for normal test
+automation, but the _gherkin_ style might be even better
+if also business people need to understand tests. If the
+same workflow needs to repeated multiple times, it is best
+to use to the _data-driven_ approach.</doc>
+<status status="FAIL" start="2024-02-03T16:26:09.992203" elapsed="0.043376"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="5" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="5" skip="0" id="s1" name="Keyword Driven">Keyword Driven</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2024-02-03T16:26:10.014817" level="ERROR">Error in file '/mnt/d/CODING/GITHUB/OPEN-SOURCE/robotparser/robot_demo/keyword_driven.robot' on line 13: Library 'CalculatorLibrary.py' does not exist.</msg>
+</errors>
+</robot>
