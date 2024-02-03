@@ -46,8 +46,9 @@ python robotparser.py -i <input-outputxml-file> -o <output-json-file>
 ```
 
 - Example
-- `python3 robotparser.py -i samples/input/hello-robot.xml -o output/hello-robot.json`
-- `python3 robotparser.py -i samples/input/output-5.0.xml -o output/output-5.0.json`
+- `python3 robotparser.py -i samples/input/hello_robot.xml -o output/hello_robot.json`
+- `python3 robotparser.py -i samples/input/output_5_0.xml -o output/output_5_0.json`
+- `python3 robotparser.py -i samples/input/random_sample_01.xml -o output/random_sample_01.json`
 
 #### Run the script in Docker (Optional)
 
