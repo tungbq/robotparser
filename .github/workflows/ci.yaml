@@ -1,0 +1,22 @@
+name: Docker Build and Run
+
+on:
+  pull_request:
+    branches: ['main']
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-docker-action@v2
+
+      - name: Build Docker image
+        run: docker build -t robotparser:latest_ci .
+
+      - name: Run Docker container
+        run: docker run -it --rm -v ${{ github.workspace }}:/app robotparser:latest_ci -i /app/samples/input/hello-robot.xml -o /app/output/hello-robot.json
