@@ -11,25 +11,21 @@ You utilize the Robot Framework for testing your application, and while the test
 ### 1. Prerequisite
 
 - `python`: You have `python` installed on your machine. See: https://www.python.org/downloads/
-- `git`: You have `git` installed on your machine to clone the source code. See: https://git-scm.com/downloads
 
 ### 2. Clone the repository
 
 Run `git clone git@github.com:tungbq/robotparser.git`
 
-### 3. Usage
-
-#### Run directly on your machine:
+### 3. Run `robotparser` script directly on your machine
 
 If you want to run the tool directly on your machine, follow below steps:
-
-- Navigate to your cloned code
-
-`cd robotparser`
 
 - Run
 
 ```
+# Navigate to your cloned code
+cd robotparser
+
 # Install dependencies
 pip install -r requirements.txt
 
@@ -46,21 +42,19 @@ python robotparser.py -i <input-outputxml-file> -o <output-json-file>
 ```
 
 - Example
-- `python3 robotparser.py -i samples/input/hello_robot.xml -o output/hello_robot.json`
-- `python3 robotparser.py -i samples/input/output_5_0.xml -o output/output_5_0.json`
-- `python3 robotparser.py -i samples/input/random_sample_01.xml -o output/random_sample_01.json`
+```
+python3 robotparser.py -i samples/input/hello_robot.xml -o output/hello_robot.json
+python3 robotparser.py -i samples/input/output_5_0.xml -o output/output_5_0.json
+python3 robotparser.py -i samples/input/random_sample_01.xml -o output/random_sample_01.json
+```
 
-#### Run the script in Docker (Optional)
+### 4. Run the script in Docker (Optional)
 
 If you want to run the script inside a Docker container, follow below steps:
 
-- Navigate to your cloned code
-
-`cd robotparser`
-
 - Build the docker image
-
 ```
+cd robotparser
 docker build -t robotparser:latest .
 ```
 
@@ -68,6 +62,13 @@ docker build -t robotparser:latest .
   Update the YOUR_ROBOT_SCRIPT_PATH which contains your target output.xml
 
 ```
+cd robotparser
 YOUR_ROBOT_SCRIPT_PATH="/home/user/testing/robot_result/"
-docker run --rm --name my_robotparser -v ${YOUR_ROBOT_SCRIPT}:/app robotparser:latest -i /app/your_robot_filename_in.xml -o /app/your_robot_filename_out.json
+# Mount your robot sccipt path to docker container. Note that `/app` is the workspace of docker container
+docker run --rm --name my_robotparser \
+                    -v ${YOUR_ROBOT_SCRIPT_PATH}:/app \
+                    robotparser:latest \
+                    -i /app/your_robot_filename_in.xml \
+                    -o /app/your_robot_filename_out.json
 ```
+One completed, we can find the JSON result under `YOUR_ROBOT_SCRIPT_PATH`
