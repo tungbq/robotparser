@@ -77,7 +77,7 @@ def read_and_parse_xml(xml_file_path):
     return output_data
 
 def write_json_to_file(data, json_file_path):
-    with open(json_file_path, "w") as json_file:
+    with open(json_file_path, "w+") as json_file:
         json.dump(data, json_file, indent=4)
 
 
