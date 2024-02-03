@@ -12,11 +12,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Check workspace
-        run: echo ${{ github.workspace }}; ls -la ${{ github.workspace }}
+      - name: Check workspace and grant permission
+        run: echo ${{ github.workspace }}; ls -la ${{ github.workspace }}; chmod +x entrypoint.sh
 
       - name: Build Docker image
         run: docker build -t robotparser:latest_ci .
 
-      - name: Run Docker container
-        run: chmod +x entrypoint.sh; docker run --name ci_for_robotparser --rm -v ${{ github.workspace }}:/app robotparser:latest_ci -i samples/input/hello-robot.xml -o samples/generated_output/hello-robot.json
+      - name: List input files
+        run: ls -1 samples/input/*.xml > input_files.txt
+
+      - name: Run Docker container for each input file
+        run: |
+          while IFS= read -r input_file; do
+            docker run --name ci_for_robotparser --rm -v ${{ github.workspace }}:/app robotparser:latest_ci -i "/app/${input_file}" -o "/app/samples/generated_output/$(basename ${input_file} .xml).json"
+          done < input_files.txt
