@@ -2,7 +2,11 @@
 
 Covert Robotframework output.xml result to output.json
 
-# Usage
+## Context
+
+You utilize the Robot Framework for testing your application, and while the test results currently exist in XML format, you require a JSON result file for additional data processing. Look no further – this script is designed to assist you in effortlessly converting an XML test result file into a JSON format.
+
+## Usage
 
 - Usage:
 
@@ -18,7 +22,7 @@ python robotparser.py -i <input-outputxml-file> -o <output-json-file>
   -h, --help Display this help message
 ```
 
-# Example
+## Example
 
 - `python3 robotparser.py -i samples/input/hello-robot.xml -o output/hello-robot.json`
 - `python3 robotparser.py -i samples/input/output-4.0.xml -o output/output-4.0.json`
