@@ -64,6 +64,7 @@ docker build -t robotparser:latest .
 ```
 
 - Start `robotparser` inside container
+  Update the YOUR_ROBOT_SCRIPT_PATH which contains your target output.xml
 
 ```
 YOUR_ROBOT_SCRIPT_PATH="/home/user/testing/robot_result/"
