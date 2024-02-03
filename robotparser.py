@@ -44,8 +44,11 @@ def calculate_elapsed_time(start_time, end_time):
     return formatted_elapsed_time
 
 def find_total_stat(all_tests_stat):
-    total_stat = next((stat for stat in all_tests_stat if stat.get('#text') == 'All Tests'), None)
-    return total_stat or {}  # return an empty dictionary if total_stat is None
+    if not isinstance(all_tests_stat, list):
+        return {}
+
+    total_stat = next((stat for stat in all_tests_stat if isinstance(stat, dict) and stat.get('#text') == 'All Tests'), None)
+    return total_stat or {}
 
 def collect_all_test_suites(suite):
     if 'test' in suite:
