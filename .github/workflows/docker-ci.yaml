@@ -19,4 +19,4 @@ jobs:
         run: docker build -t robotparser:latest_ci .
 
       - name: Run Docker container
-        run: chmod +x entrypoint.sh; docker run --name ci_for_robotparser --rm -v ${{ github.workspace }}:/app robotparser:latest_ci -i samples/input/hello-robot.xml -o output/hello-robot.json
+        run: chmod +x entrypoint.sh; docker run --name ci_for_robotparser --rm -v ${{ github.workspace }}:/app robotparser:latest_ci -i samples/input/hello-robot.xml -o samples/generated_output/hello-robot.json
