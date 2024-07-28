@@ -6,13 +6,9 @@ Run sample robot suites to generate output.xml files
 
 ```
 pip install robotframework
-``
+```
 
 - Run test script
 ```
-
 python3 -m robot robot_demo/keyword_driven.robot
-
-```
-
 ```
